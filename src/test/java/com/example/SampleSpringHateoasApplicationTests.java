@@ -29,8 +29,17 @@ public class SampleSpringHateoasApplicationTests {
 
 	@Test
 	public void defaultValue() throws Exception {
-		this.mockMvc.perform(get("/greeting?name={name}", "World")).andExpect(status().isOk());
-		//assertTrue(greetingController.greeting("").toString().contains("World"));
+		this.mockMvc.perform(get("/greeting?name={name}", "")).andExpect(status().isOk());
 	}
+
+    @Test
+    public void NonParam() throws Exception {
+        this.mockMvc.perform(get("/greeting")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void NonExistMethod() throws Exception {
+        this.mockMvc.perform(get("/greet")).andExpect(status().is4xxClientError());
+    }
 
 }
